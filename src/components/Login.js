@@ -1,4 +1,4 @@
-// In src/components/Login.js
+// In src/components/Login.js (FINAL, VERIFIED VERSION)
 
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -26,7 +26,10 @@ function Login({ onLoginSuccess }) {
             const response = await axios.post(`${API_URL}/auth/login/`, payload);
             localStorage.setItem('access_token', response.data.access);
             localStorage.setItem('refresh_token', response.data.refresh);
-            onLoginSuccess();
+            
+            // This call now triggers the profile fetch in App.js
+            onLoginSuccess(); 
+
         } catch (err) {
             setError('Invalid Phone Number or Password. Please try again.');
         } finally {
@@ -36,24 +39,28 @@ function Login({ onLoginSuccess }) {
 
     return (
         <div className="login-container">
-            <h2>Cook Login 🔑</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="phone_number">Phone Number</label>
-                    <input id="phone_number" name="phone_number" type="tel" placeholder="Your 10-digit mobile number" value={formData.phone_number} onChange={handleChange} required />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input id="password" name="password" type="password" placeholder="Your Password" value={formData.password} onChange={handleChange} required />
-                </div>
-                {error && <p className="error-message">{error}</p>}
-                <button type="submit" className="submit-btn" disabled={isLoading}>
-                    {isLoading ? 'Logging In...' : 'Access My Portal'}
-                </button>
-            </form>
-            <p className="small-link">
-                New Cook? <button type="button" onClick={() => navigate('/signup')} className="link-button">Create Account</button>
-            </p>
+            <div className="form-wrapper">
+                <h2>Welcome Back, Cook!</h2>
+                <p>Sign in with your phone number to manage your schedule.</p>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="phone_number">Phone Number</label>
+                        <input id="phone_number" name="phone_number" type="tel" placeholder="Your 10-digit mobile number" value={formData.phone_number} onChange={handleChange} required />
+                        <p className="input-hint">Please include your country code if necessary.</p>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input id="password" name="password" type="password" placeholder="Your Password" value={formData.password} onChange={handleChange} required />
+                    </div>
+                    {error && <p className="error-message">{error}</p>}
+                    <button type="submit" className="submit-btn" disabled={isLoading}>
+                        {isLoading ? 'Signing In...' : 'Sign In'}
+                    </button>
+                </form>
+                <p className="small-link">
+                    New Cook? <button type="button" onClick={() => navigate('/signup')} className="link-button">Create an Account</button>
+                </p>
+            </div>
         </div>
     );
 }

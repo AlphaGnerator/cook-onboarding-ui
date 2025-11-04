@@ -1,38 +1,453 @@
-.App {
-  text-align: center;
-}
+/* In src/App.css - Replace everything */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #F8F9FA; color: #343A40; }
+.app-container { width: 100%; height: 100vh; }
+.app-layout { display: flex; height: 100vh; }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+.sidebar { width: 260px; background-color: #FFFFFF; border-right: 1px solid #E9ECEF; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
+.sidebar-header { display: flex; align-items: center; gap: 12px; padding: 10px 0 30px 0; }
+.sidebar-header .logo { font-size: 28px; }
+.sidebar-header h2 { font-size: 20px; font-weight: 600; margin: 0; }
+.sidebar-nav { display: flex; flex-direction: column; gap: 8px; }
+.nav-link { color: #495057; text-decoration: none; font-size: 16px; padding: 12px 16px; border-radius: 8px; transition: background-color 0.2s, color 0.2s; }
+.nav-link:hover { background-color: #F1F3F5; }
+.nav-link.active { background-color: #E6F9F0; color: #00B875; font-weight: 600; }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.main-content { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; }
+.main-header { display: flex; align-items: center; padding: 20px 40px; background-color: #FFFFFF; border-bottom: 1px solid #E9ECEF; flex-shrink: 0; }
+.main-header h1 { font-size: 24px; margin: 0; flex-grow: 1; }
+.profile-icon { width: 40px; height: 40px; border-radius: 50%; background-color: #DEE2E6; }
+.content-area { padding: 40px; overflow-y: auto; flex-grow: 1; }
+
+.welcome-banner { background: linear-gradient(90deg, #F0FFF8 0%, #FDFDEE 100%); border: 1px solid #D4F4E6; padding: 25px; border-radius: 12px; margin-bottom: 30px; }
+.welcome-banner h2 { margin: 0 0 5px 0; font-size: 22px; }
+.welcome-banner p { margin: 0; color: #555; }
+.dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+.upcoming-sessions h3, .widget-card h4 { margin-top: 0; font-size: 18px; margin-bottom: 5px; }
+.upcoming-sessions > p { margin-top: 0; color: #666; font-size: 14px; }
+.session-card { background-color: #fff; border: 1px solid #E9ECEF; border-radius: 10px; padding: 20px; }
+.session-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+.session-card-header h4 { margin: 0; font-size: 18px; }
+.session-price { font-size: 18px; font-weight: 600; color: #00B875; }
+.session-detail { margin: 8px 0; color: #555; font-size: 14px; }
+.side-widgets { display: flex; flex-direction: column; gap: 30px; }
+.widget-card { background-color: #fff; border: 1px solid #E9ECEF; border-radius: 10px; padding: 20px; }
+.availability-widget { cursor: pointer; position: relative; }
+.availability-widget .calendar-icon { font-size: 24px; position: absolute; top: 20px; right: 20px; }
+.widget-card.wallet-card { background-color: #F8F9FA; border-color: #E9ECEF; }
+.wallet-subtitle { font-size: 14px; color: #555; margin: 0 0 10px 0; }
+.wallet-balance { font-size: 36px; font-weight: 700; color: #333; margin: 0; }
+.todays-earnings { font-size: 13px; color: #777; margin: 5px 0 0 0; }
+.login-container, .signup-container, .portal-container { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; }
+.form-wrapper { background-color: #FFFFFF; padding: 40px 50px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.05); text-align: center; width: 100%; max-width: 450px; }
+.spinner-dashboard, .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #00B875; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 100px auto; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* In src/App.css -- ADD THIS TO THE BOTTOM OF THE FILE */
+
+/* --- New Portal Page Styles --- */
+.portal-fullpage-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(to bottom right, #f1f8f5, #ffffff);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.portal-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.portal-header h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: #212529;
+  margin: 0 0 10px 0;
+}
+
+.portal-header p {
+  font-size: 18px;
+  color: #6C757D;
+  max-width: 600px;
+}
+
+.portal-cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.portal-card {
+  background-color: #ffffff;
+  border: 1px solid #E9ECEF;
+  border-radius: 12px;
+  padding: 30px;
+  flex: 1;
+  max-width: 400px;
+  text-align: left;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.portal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.card-icon {
+  font-size: 32px;
+  width: 60px;
+  height: 60px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.customer-icon {
+  background-color: #E6F9F0;
+}
+
+.cook-icon {
+  background-color: #FFFBE6;
+}
+
+.portal-card h2 {
+  font-size: 24px;
+  margin: 0 0 10px 0;
+  color: #212529;
+}
+
+.portal-card p {
+  font-size: 16px;
+  color: #6C757D;
+  line-height: 1.6;
+}
+
+.portal-button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.2s;
+}
+
+.customer-button {
+  background-color: #00B875;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.customer-button:disabled {
+    background-color: #a0dec9;
+    cursor: not-allowed;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.cook-button {
+  background-color: #FFD43B;
+  color: #343A40;
 }
+
+.cook-button:hover {
+    background-color: #fcc419;
+}
+
+.admin-login-link {
+  margin-top: 50px;
+  color: #6C757D;
+  font-size: 14px;
+}
+
+/* In src/App.css -- ADD THIS TO THE BOTTOM OF THE FILE */
+
+/* --- Login & Signup Form Wrapper --- */
+.login-container, .signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.form-wrapper {
+    background-color: #FFFFFF;
+    border: 1px solid #E9ECEF;
+    border-radius: 12px;
+    padding: 40px 50px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
+}
+
+.form-wrapper h2 {
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    color: #212529;
+    margin: 0 0 10px 0;
+}
+
+.form-wrapper p {
+    text-align: center;
+    color: #6C757D;
+    margin-bottom: 30px;
+}
+
+/* --- Form Element Styling --- */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #CED4DA;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #00B875;
+    box-shadow: 0 0 0 3px rgba(0, 184, 117, 0.2);
+}
+
+.input-hint {
+    font-size: 12px;
+    color: #6C757D;
+    margin-top: 5px;
+    text-align: left !important;
+}
+
+/* --- Button Styling --- */
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: #00B875;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #00a067;
+}
+
+.submit-btn:disabled {
+    background-color: #a0dec9;
+    cursor: not-allowed;
+}
+
+.small-link {
+    font-size: 14px;
+    color: #6C757D;
+    margin-top: 25px;
+    text-align: center;
+}
+
+.link-button {
+    background: none;
+    border: none;
+    color: #00B875;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    font-size: 14px;
+}
+
+/* In src/App.css -- ADD THESE TO THE BOTTOM */
+
+/* --- Dashboard Specific Styles --- */
+.dashboard-content { /* This class wraps the main dashboard layout */ }
+
+.dashboard-content .welcome-banner {
+  background: linear-gradient(90deg, #F0FFF8 0%, #FDFDEE 100%);
+  border: 1px solid #D4F4E6;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.welcome-banner h2 {
+  margin: 0 0 5px 0;
+  font-size: 22px;
+  font-weight: 600; /* Poppins semi-bold */
+}
+
+.welcome-banner p {
+  margin: 0;
+  color: #555;
+  font-size: 16px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* 2 parts for tasks, 1 part for widgets */
+  gap: 30px;
+}
+
+.upcoming-sessions {
+  background-color: #fff;
+  border: 1px solid #E9ECEF;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.upcoming-sessions h3 {
+  margin-top: 0;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.upcoming-sessions > p {
+  margin-top: 0;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 15px; /* Added margin for spacing */
+}
+
+.session-list {
+  display: flex; /* Changed to flex to manage cards side-by-side */
+  flex-direction: column; /* Stack cards vertically */
+  gap: 15px; /* Space between cards */
+  overflow-y: auto; /* Enable scrolling if many cards */
+  max-height: 400px; /* Limit height if needed */
+}
+
+.session-card {
+  background-color: #fff;
+  border: 1px solid #E9ECEF;
+  border-radius: 10px;
+  padding: 20px;
+  transition: box-shadow 0.2s;
+}
+
+.session-card:hover {
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.session-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.session-card-header h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.session-price {
+  font-size: 18px;
+  font-weight: 600;
+  color: #00B875;
+}
+
+.session-detail {
+  margin: 8px 0;
+  color: #555;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Adjusting styles for multiple cards */
+.upcoming-sessions .session-card {
+    /* Adjust width or flex properties if you want them truly side-by-side
+       For now, vertical stacking within the list is fine */
+    width: 100%; /* Make sure card takes full width of its container */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.side-widgets {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.widget-card {
+  background-color: #fff;
+  border: 1px solid #E9ECEF;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.availability-widget {
+  cursor: pointer;
+  position: relative;
+}
+
+.availability-widget .calendar-icon {
+  font-size: 24px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #FF8C42; /* Orange color for calendar icon */
+}
+
+.widget-card.wallet-card {
+  background-color: #F0F8FF; /* Light blue background for wallet */
+  border-color: #D4E9FF;
+}
+
+.wallet-subtitle { font-size: 14px; color: #6C757D; margin: 0 0 10px 0; }
+.wallet-balance { font-size: 36px; font-weight: 700; color: #343A40; margin: 0; }
+.todays-earnings { font-size: 13px; color: #777; margin: 5px 0 0 0; border-top: 1px solid #D4E9FF; padding-top: 10px; margin-top: 10px; }
+
+/* --- General Button Styling (can be reused for header logout) --- */
+.logout-button-header {
+    background: none;
+    border: 1px solid #CED4DA;
+    color: #495057;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+.logout-button-header:hover {
+    background-color: #E9ECEF;
+    border-color: #ADB5BD;
+}
+
+/* --- Ensure spinner styling is consistent --- */
+.spinner { border: 4px solid #f3f3f3; border-top: 4px solid #00B875; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 100px auto; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.spinner-dashboard { /* If you have a separate spinner for dashboard, keep it */ }
