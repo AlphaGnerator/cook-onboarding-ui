@@ -1,4 +1,5 @@
-// src/components/Dashboard.js
+// In src/components/Dashboard.js (CORRECTED AND FINAL)
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -28,7 +29,7 @@ function Dashboard({ onLogout }) {
           alert('Session expired. Please log in again.');
           onLogout?.();
         } else {
-          setError('Could not load dashboard data.');
+          setError('Could not load dashboard data. Please try again later.');
         }
       } finally {
         setIsLoading(false);
@@ -37,58 +38,61 @@ function Dashboard({ onLogout }) {
     fetchDashboardData();
   }, [onLogout]);
 
-  if (isLoading) return <div className="spinner"></div>;
-
-  // Defensive defaults
-  const cookName = summary?.cook_name ?? 'Cook';
-  const wallet = summary?.wallet_balance ?? 0;
-  const today = summary?.todays_earnings ?? 0;
-  const upcoming = Array.isArray(summary?.upcoming_schedule) ? summary.upcoming_schedule : [];
+  if (isLoading) {
+    return <div className="spinner"></div>;
+  }
 
   if (error) {
     return (
       <div className="error-container">
         <p className="error-message">{error}</p>
-        <button className="logout-button-dashboard" onClick={onLogout}>Logout</button>
+        <button className="logout-button-header" onClick={onLogout}>Logout</button>
       </div>
     );
   }
+
+  // Defensive defaults to prevent crashes if the API response is incomplete
+  const cookName = summary?.cook_name ?? 'Cook';
+  const walletBalance = parseFloat(summary?.wallet_balance ?? 0).toFixed(2);
+  const todaysEarnings = parseFloat(summary?.todays_earnings ?? 0).toFixed(2);
+  const upcomingTasks = Array.isArray(summary?.upcoming_schedule) ? summary.upcoming_schedule : [];
 
   return (
     <div className="dashboard-content">
       <div className="welcome-banner">
         <h2>Welcome back, {cookName}!</h2>
-        <p>Manage your availability, view your upcoming sessions, and update your profile.</p>
+        <p>Here's a summary of your schedule and earnings.</p>
       </div>
 
       <div className="dashboard-grid">
         <div className="upcoming-sessions">
           <h3>Your Upcoming Sessions</h3>
-          <p>Here are the cooking sessions booked by customers.</p>
+          <p>You have {upcomingTasks.length} upcoming session{upcomingTasks.length !== 1 ? 's' : ''}.</p>
 
-          {upcoming.length > 0 ? (
+          {upcomingTasks.length > 0 ? (
             <div className="session-list">
-              {upcoming.map((task) => {
-                const title = task?.dish?.name ?? 'Session';
-                const price = task?.cook_earnings ?? 0;
-                const dateStr = task?.date ? new Date(task.date).toDateString() : 'Date TBA';
-                const timeStr = (task?.start_time ?? '').slice(0, 5);
+              {upcomingTasks.map((task) => {
+                const dishName = task?.dish?.name ?? 'Unnamed Task';
+                const earnings = task?.cook_earnings ?? '0.00';
+                const date = task?.date ? new Date(task.date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Date not set';
+                const time = task?.start_time ? task.start_time.slice(0, 5) : '';
 
                 return (
-                  <div key={task?.id ?? Math.random()} className="session-card">
+                  <div key={task.id} className="session-card" onClick={() => navigate(`/task/${task.id}`)} style={{cursor: 'pointer'}}>
                     <div className="session-card-header">
-                      <h4>{title}</h4>
-                      <span className="session-price">₹{price}</span>
+                      <h4>{dishName}</h4>
+                      <span className="session-price">₹{earnings}</span>
                     </div>
-                    <p className="session-detail">👤 For John Doe</p>
-                    <p className="session-detail">📍 123 Foodie Lane, Gourmet City</p>
-                    <p className="session-detail">🗓️ {dateStr}{timeStr ? `, ${timeStr}` : ''}</p>
+                    <p className="session-detail">🗓️ {date}{time && `, ${time}`}</p>
+                    <p className="session-detail" style={{color: '#00B875', fontWeight: '600'}}>View Recipe & Details →</p>
                   </div>
                 );
               })}
             </div>
           ) : (
-            <p>No upcoming sessions scheduled.</p>
+            <div className="session-card">
+              <p>You have no upcoming sessions. Set your availability to get booked!</p>
+            </div>
           )}
         </div>
 
@@ -96,8 +100,8 @@ function Dashboard({ onLogout }) {
           <div className="widget-card wallet-card">
             <h4>My Wallet</h4>
             <p className="wallet-subtitle">Your total available balance.</p>
-            <p className="wallet-balance">₹{wallet}</p>
-            <p className="todays-earnings">Today's Earnings: ₹{today}</p>
+            <p className="wallet-balance">₹{walletBalance}</p>
+            <p className="todays-earnings">Today's Earnings: ₹{todaysEarnings}</p>
           </div>
           <div className="widget-card availability-widget" onClick={() => navigate('/set-availability')}>
             <h4>Manage Availability</h4>

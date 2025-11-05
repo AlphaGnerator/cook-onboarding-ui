@@ -1,4 +1,4 @@
-// In src/components/Login.js (FINAL, VERIFIED VERSION)
+// In src/components/Login.js (CORRECTED)
 
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -27,7 +27,8 @@ function Login({ onLoginSuccess }) {
             localStorage.setItem('access_token', response.data.access);
             localStorage.setItem('refresh_token', response.data.refresh);
             
-            // This call now triggers the profile fetch in App.js
+            // This now correctly calls the function from App.js without any arguments.
+            // App.js will now take over and fetch the user's profile.
             onLoginSuccess(); 
 
         } catch (err) {
@@ -45,14 +46,29 @@ function Login({ onLoginSuccess }) {
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="phone_number">Phone Number</label>
-                        <input id="phone_number" name="phone_number" type="tel" placeholder="Your 10-digit mobile number" value={formData.phone_number} onChange={handleChange} required />
-                        <p className="input-hint">Please include your country code if necessary.</p>
+                        <input 
+                            id="phone_number" 
+                            name="phone_number" 
+                            type="tel" 
+                            placeholder="Your 10-digit mobile number" 
+                            value={formData.phone_number} 
+                            onChange={handleChange} 
+                            required 
+                        />
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input id="password" name="password" type="password" placeholder="Your Password" value={formData.password} onChange={handleChange} required />
+                        <input 
+                            id="password" 
+                            name="password" 
+                            type="password" 
+                            placeholder="Your Password" 
+                            value={formData.password} 
+                            onChange={handleChange} 
+                            required 
+                        />
                     </div>
-                    {error && <p className="error-message">{error}</p>}
+                    {error && <p className="error-message" style={{color: '#D93025', fontSize: '14px', textAlign: 'center'}}>{error}</p>}
                     <button type="submit" className="submit-btn" disabled={isLoading}>
                         {isLoading ? 'Signing In...' : 'Sign In'}
                     </button>
@@ -66,3 +82,4 @@ function Login({ onLoginSuccess }) {
 }
 
 export default Login;
+
