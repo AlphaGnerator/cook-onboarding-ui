@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/cook-onboarding-ui/static/css/main.f855e6bc.css",
-    "main.js": "/cook-onboarding-ui/static/js/main.2a017ae1.js",
+    "main.css": "/cook-onboarding-ui/static/css/main.dafe0279.css",
+    "main.js": "/cook-onboarding-ui/static/js/main.3228cbed.js",
     "static/js/453.b9b61edc.chunk.js": "/cook-onboarding-ui/static/js/453.b9b61edc.chunk.js",
     "index.html": "/cook-onboarding-ui/index.html",
-    "main.f855e6bc.css.map": "/cook-onboarding-ui/static/css/main.f855e6bc.css.map",
-    "main.2a017ae1.js.map": "/cook-onboarding-ui/static/js/main.2a017ae1.js.map",
+    "main.dafe0279.css.map": "/cook-onboarding-ui/static/css/main.dafe0279.css.map",
+    "main.3228cbed.js.map": "/cook-onboarding-ui/static/js/main.3228cbed.js.map",
     "453.b9b61edc.chunk.js.map": "/cook-onboarding-ui/static/js/453.b9b61edc.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f855e6bc.css",
-    "static/js/main.2a017ae1.js"
+    "static/css/main.dafe0279.css",
+    "static/js/main.3228cbed.js"
   ]
 }
